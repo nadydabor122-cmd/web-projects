@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaytoon — Authentic Egyptian Kitchen</title>
+<meta name="description" content="Zaytoon Restaurant: authentic Egyptian dishes made daily from family recipes. Koshari, grills, fresh baladi bread and more.">
+<style>
+  :root{
+    --olive:#5b6236; --olive-dark:#454a28; --terra:#c0562f; --cream:#faf6ee; --cream2:#f3ecdd;
+    --ink:#2c2a24; --muted:#7a7568; --gold:#b98a2f;
+    --serif:Georgia,"Times New Roman",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.65}
+  a{text-decoration:none;color:inherit}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+  h1,h2,h3,.serif{font-family:var(--serif);font-weight:700}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(250,246,238,.94);backdrop-filter:blur(8px);border-bottom:1px solid #e7dfc9}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{font-family:var(--serif);font-size:1.5rem;color:var(--olive-dark)}
+  .brand span{color:var(--terra)}
+  .nav-links{display:flex;gap:30px;align-items:center;font-weight:600;font-size:.95rem}
+  .nav-links a:hover{color:var(--terra)}
+  .btn{display:inline-block;padding:12px 28px;border-radius:8px;font-weight:700;transition:transform .15s ease,background .15s ease;cursor:pointer;border:none;font-size:.95rem}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-terra{background:var(--terra);color:#fff}
+  .btn-terra:hover{background:#a8491f}
+  .btn-olive{background:var(--olive);color:#fff}
+  .btn-outline{border:2px solid #fff;color:#fff}
+  .btn-sm{padding:9px 22px;font-size:.88rem}
+  .menu-toggle{display:none;background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--olive-dark)}
+
+  .hero{position:relative;min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:url('hero.jpg') center/cover no-repeat}
+  .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(20,16,8,.45) 0%,rgba(20,16,8,.82) 100%)}
+  .hero-inner{position:relative;z-index:2;padding:110px 24px 90px;max-width:760px}
+  .hero .eyebrow{font-size:.85rem;letter-spacing:.34em;text-transform:uppercase;color:#f0d9a8;margin-bottom:20px;font-weight:700}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.05;letter-spacing:-.01em}
+  .hero .divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:26px auto;color:#f0d9a8}
+  .hero .divider::before,.hero .divider::after{content:"";width:70px;height:1px;background:#f0d9a8;opacity:.6}
+  .hero p{font-size:1.1rem;color:#f3ead6;margin-bottom:34px}
+  .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+  .intro{padding:80px 0;text-align:center}
+  .intro .wrap{max-width:700px}
+  .intro h2{font-size:clamp(1.7rem,3.4vw,2.5rem);color:var(--olive-dark);margin-bottom:18px}
+  .intro p{color:var(--muted);font-size:1.05rem}
+  .intro .sig{font-family:var(--serif);font-style:italic;color:var(--terra);margin-top:22px;font-size:1.1rem}
+
+  section{padding:84px 0}
+  .section-head{text-align:center;margin-bottom:52px}
+  .kicker{color:var(--terra);letter-spacing:.28em;text-transform:uppercase;font-size:.76rem;font-weight:800}
+  .section-head h2{font-size:clamp(1.9rem,4vw,2.8rem);color:var(--olive-dark);margin-top:10px}
+  .ornament{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px;color:var(--gold)}
+  .ornament::before,.ornament::after{content:"";width:56px;height:1px;background:var(--gold);opacity:.55}
+
+  .menu{background:var(--cream2)}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 56px;max-width:940px;margin:0 auto}
+  .menu-cat{grid-column:1/-1;text-align:center;margin-top:30px}
+  .menu-cat:first-child{margin-top:0}
+  .menu-cat h3{font-size:1.35rem;color:var(--terra)}
+  .dish{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:13px 0;border-bottom:1px dashed #d8cdb2}
+  .dish .name{font-weight:700;font-size:1.02rem}
+  .dish .desc{display:block;font-weight:400;font-size:.86rem;color:var(--muted)}
+  .dish .dots{flex:1;border-bottom:2px dotted #c9bd9d;transform:translateY(-4px)}
+  .dish .price{font-family:var(--serif);font-weight:700;color:var(--olive-dark);white-space:nowrap}
+  .chef-tag{display:inline-block;background:var(--terra);color:#fff;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:middle;font-weight:800}
+
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .about-photo{border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(69,74,40,.25);transform:rotate(-1.5deg)}
+  .about-photo img{width:100%;height:440px;object-fit:cover}
+  .about h2{font-size:clamp(1.7rem,3.2vw,2.4rem);color:var(--olive-dark);margin-bottom:18px}
+  .about p{color:var(--muted);margin-bottom:16px}
+  .about ul{list-style:none;margin:20px 0 26px}
+  .about li{padding:7px 0 7px 30px;position:relative;font-weight:600}
+  .about li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+
+  .info{background:var(--olive-dark);color:#e9e4d2}
+  .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;text-align:center}
+  .info h3{color:#fff;font-size:1.15rem;margin-bottom:12px}
+  .info p{font-size:.95rem;color:#cfc9b4}
+  .info .big{font-family:var(--serif);font-size:1.3rem;color:#f0d9a8}
+
+  .reserve{background:var(--cream)}
+  .form-card{background:#fff;border:1px solid #e7dfc9;border-radius:16px;padding:46px;max-width:640px;margin:0 auto;box-shadow:0 20px 50px rgba(69,74,40,.1)}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  label{display:block;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:18px 0 7px}
+  input,select,textarea{width:100%;padding:13px 15px;border:1px solid #ddd3b8;border-radius:8px;background:var(--cream);font-size:.98rem;font-family:inherit;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--olive);outline-offset:-1px}
+  .form-card .btn{width:100%;margin-top:26px;padding:15px}
+
+  footer{background:#262a17;color:#b9b49e;padding:56px 0 30px}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:36px;margin-bottom:36px}
+  footer h4{color:#fff;font-size:.9rem;margin-bottom:14px;font-family:var(--serif)}
+  footer a{display:block;padding:4px 0;font-size:.9rem}
+  footer a:hover{color:#f0d9a8}
+  .foot-brand{font-family:var(--serif);font-size:1.5rem;color:#fff;margin-bottom:12px}
+  .foot-brand span{color:#e0a48a}
+  .foot-note{border-top:1px solid rgba(255,255,255,.12);padding-top:22px;font-size:.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media (max-width:820px){
+    .menu-grid{grid-template-columns:1fr}
+    .about-grid{grid-template-columns:1fr}
+    .about-photo{transform:none}
+    .info-grid{grid-template-columns:1fr;gap:28px}
+    .form-row{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr}
+    .nav-links{position:fixed;inset:72px 0 auto 0;background:#fff;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid #e7dfc9;display:none}
+    .nav-links.open{display:flex}
+    .menu-toggle{display:block}
+    section{padding:60px 0}
+    .form-card{padding:30px 22px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">Zay<span>toon</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#menu">Menu</a>
+      <a href="#about">Our story</a>
+      <a href="#visit">Visit us</a>
+      <a href="#reserve" class="btn btn-terra btn-sm">Reserve a table</a>
+    </nav>
+    <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="eyebrow">Authentic Egyptian Kitchen</div>
+    <h1>Recipes from our<br>grandmother's table</h1>
+    <div class="divider">✦</div>
+    <p>Koshari, charcoal grills and baladi bread baked all day — made the way it's been made in our family for three generations.</p>
+    <div class="hero-actions">
+      <a href="#reserve" class="btn btn-terra">Reserve a table</a>
+      <a href="#menu" class="btn btn-outline">See the menu</a>
+    </div>
+  </div>
+</section>
+
+<div class="intro">
+  <div class="wrap">
+    <h2>Real food, slow made</h2>
+    <p>Every morning we knead the baladi bread, simmer the lentils and light the charcoal. Nothing frozen, nothing rushed. Just the dishes Egyptians grew up on, served in a room that feels like home.</p>
+    <div class="sig">— The Zaytoon family</div>
+  </div>
+</div>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">The menu</div>
+      <h2>Made fresh, every single day</h2>
+      <div class="ornament">✦</div>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-cat"><h3>Mezze &amp; starters</h3></div>
+      <div class="dish"><div class="name">Baladi bread &amp; dips<span class="desc">Tahina, baba ghanoush, green salad</span></div><div class="dots"></div><div class="price">45 EGP</div></div>
+      <div class="dish"><div class="name">Sambousek<span class="desc">Crisp pastries, white cheese &amp; mint or spiced beef</span></div><div class="dots"></div><div class="price">55 EGP</div></div>
+      <div class="dish"><div class="name">Kobeiba<span class="desc">Cracked-wheat shells, minced beef, pine nuts</span></div><div class="dots"></div><div class="price">70 EGP</div></div>
+      <div class="dish"><div class="name">Fattah soup<span class="desc">Slow lamb broth, toasted bread, garlic vinegar</span></div><div class="dots"></div><div class="price">60 EGP</div></div>
+
+      <div class="menu-cat"><h3>From the grill</h3></div>
+      <div class="dish"><div class="name">Kofta platter<span class="desc">Charcoal-grilled, tahina, baladi bread</span><span class="chef-tag">House favorite</span></div><div class="dots"></div><div class="price">180 EGP</div></div>
+      <div class="dish"><div class="name">Mixed grill<span class="desc">Kofta, shish tawook, lamb chops, rice</span></div><div class="dots"></div><div class="price">290 EGP</div></div>
+      <div class="dish"><div class="name">Shish tawook<span class="desc">24-hour garlic &amp; yogurt marinade</span></div><div class="dots"></div><div class="price">165 EGP</div></div>
+      <div class="dish"><div class="name">Grilled pigeon<span class="desc">Free-range, stuffed with seasoned freekeh</span></div><div class="dots"></div><div class="price">220 EGP</div></div>
+
+      <div class="menu-cat"><h3>Egyptian classics</h3></div>
+      <div class="dish"><div class="name">Koshari Zaytoon<span class="desc">Crispy onions, spiced tomato, dakka</span><span class="chef-tag">House favorite</span></div><div class="dots"></div><div class="price">75 EGP</div></div>
+      <div class="dish"><div class="name">Molokhia with chicken<span class="desc">Slow-cooked, rice &amp; baladi bread</span></div><div class="dots"></div><div class="price">140 EGP</div></div>
+      <div class="dish"><div class="name">Mahshi selection<span class="desc">Vine leaves, zucchini, eggplant, peppers</span></div><div class="dots"></div><div class="price">120 EGP</div></div>
+      <div class="dish"><div class="name">Fattah<span class="desc">Crispy bread, rice, lamb, garlic tomato sauce</span></div><div class="dots"></div><div class="price">185 EGP</div></div>
+
+      <div class="menu-cat"><h3>Dessert &amp; drinks</h3></div>
+      <div class="dish"><div class="name">Om Ali<span class="desc">Warm pastry, milk, nuts, raisins</span></div><div class="dots"></div><div class="price">65 EGP</div></div>
+      <div class="dish"><div class="name">Basbousa<span class="desc">Semolina, orange-blossom syrup</span></div><div class="dots"></div><div class="price">50 EGP</div></div>
+      <div class="dish"><div class="name">Fresh sugarcane juice</div><div class="dots"></div><div class="price">35 EGP</div></div>
+      <div class="dish"><div class="name">Mint tea<span class="desc">Loose-leaf, poured the traditional way</span></div><div class="dots"></div><div class="price">30 EGP</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-photo"><img src="hero.jpg" alt="A table full of Egyptian dishes at Zaytoon"></div>
+    <div>
+      <div class="kicker">Our story</div>
+      <h2>Three generations, one kitchen</h2>
+      <p>Zaytoon began in 1962 as a two-table lunch counter run by our grandmother, Sitto Nabaweya. Her koshari recipe — the one with the extra-crispy onions — is still the one we cook today.</p>
+      <p>We source from the same farms she did, bake baladi bread in a stone oven, and treat every guest like family at Friday lunch.</p>
+      <ul>
+        <li>Family recipes since 1962</li>
+        <li>Baladi bread baked all day</li>
+        <li>Charcoal grill, never gas</li>
+        <li>Vegetarian &amp; vegan dishes</li>
+      </ul>
+      <a href="#reserve" class="btn btn-olive">Book your table</a>
+    </div>
+  </div>
+</section>
+
+<section class="info" id="visit">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker" style="color:#f0d9a8">Visit us</div>
+      <h2 style="color:#fff">In the heart of the city</h2>
+    </div>
+    <div class="info-grid">
+      <div>
+        <h3>Location</h3>
+        <p class="big">8 Champollion St, Downtown</p>
+        <p>Cairo, Egypt</p>
+      </div>
+      <div>
+        <h3>Hours</h3>
+        <p class="big">Daily 12 PM – 12 AM</p>
+        <p>Friday lunch from 1 PM</p>
+      </div>
+      <div>
+        <h3>Reservations</h3>
+        <p class="big">+20 100 456 7890</p>
+        <p>hello@zaytoon.eg</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reserve" id="reserve">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Reservations</div>
+      <h2>Save your seat</h2>
+      <div class="ornament">✦</div>
+    </div>
+    <form class="form-card" onsubmit="event.preventDefault();this.innerHTML='<div style=&quot;text-align:center;padding:40px 0&quot;><h3 style=&quot;color:var(--olive-dark);font-size:1.5rem;margin-bottom:10px&quot;>Shukran! Request received.</h3><p style=&quot;color:var(--muted)&quot;>We will confirm your table by phone within the hour.</p></div>'">
+      <div class="form-row">
+        <div><label for="name">Name</label><input id="name" type="text" placeholder="Your name" required></div>
+        <div><label for="phone">Phone</label><input id="phone" type="tel" placeholder="+20 ..." required></div>
+      </div>
+      <div class="form-row">
+        <div><label for="date">Date</label><input id="date" type="date" required></div>
+        <div><label for="time">Time</label><input id="time" type="time" required></div>
+      </div>
+      <div class="form-row">
+        <div><label for="guests">Guests</label><select id="guests"><option>2 people</option><option>3 people</option><option>4 people</option><option>5 people</option><option>6+ people</option></select></div>
+        <div><label for="occasion">Occasion (optional)</label><select id="occasion"><option>Just dinner</option><option>Birthday</option><option>Family gathering</option><option>Business</option></select></div>
+      </div>
+      <label for="notes">Notes</label>
+      <textarea id="notes" rows="3" placeholder="Allergies, high chair, window seat..."></textarea>
+      <button type="submit" class="btn btn-terra">Request table</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Zay<span>toon</span></div>
+        <p style="font-size:.9rem;max-width:300px">Authentic Egyptian kitchen. Family recipes since 1962, in the heart of Downtown Cairo.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="#menu">Menu</a><a href="#about">Our story</a><a href="#reserve">Reservations</a><a href="#">Catering</a>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a>
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>© 2026 Zaytoon Restaurant. All rights reserved.</span>
+      <span>Made with love and a lot of garlic.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
