@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRON PULSE Gym — Stronger every rep</title>
+<meta name="description" content="IRON PULSE Gym: strength training, HIIT, boxing and mobility classes. Modern equipment, certified coaches, flexible plans.">
+<style>
+  :root{
+    --red:#e11d48; --red-dark:#be123c; --bg:#0b0b0f; --panel:#15151c; --panel2:#1c1c26;
+    --text:#f4f4f5; --muted:#a1a1aa; --line:#26262f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{text-decoration:none;color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  .condensed{font-family:"Arial Narrow","Helvetica Neue",Arial,sans-serif;letter-spacing:.02em}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(11,11,15,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{font-weight:900;font-size:1.25rem;letter-spacing:.06em}
+  .brand em{color:var(--red);font-style:normal}
+  .nav-links{display:flex;gap:30px;align-items:center;font-weight:600;font-size:.92rem;text-transform:uppercase;letter-spacing:.08em}
+  .nav-links a:hover{color:var(--red)}
+  .btn{display:inline-block;padding:13px 30px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.85rem;border:none;cursor:pointer;transition:transform .15s ease,background .15s ease;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-red{background:var(--red);color:#fff}
+  .btn-red:hover{background:var(--red-dark)}
+  .btn-ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px #fff}
+  .btn-sm{padding:9px 20px}
+  .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
+
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:url('hero.jpg') center/cover no-repeat}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,15,.95) 8%,rgba(11,11,15,.6) 50%,rgba(11,11,15,.25))}
+  .hero-inner{position:relative;z-index:2;padding:140px 24px 90px}
+  .hero .tag{display:inline-block;color:var(--red);font-weight:800;letter-spacing:.3em;text-transform:uppercase;font-size:.8rem;margin-bottom:20px}
+  .hero h1{font-size:clamp(3rem,8vw,6rem);line-height:.95;font-weight:900;text-transform:uppercase;letter-spacing:-.01em}
+  .hero h1 span{color:var(--red)}
+  .hero p{max-width:480px;margin:24px 0 36px;color:var(--muted);font-size:1.05rem}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+  .hero-stats{display:flex;gap:44px;margin-top:60px;flex-wrap:wrap}
+  .hstat .n{font-size:1.9rem;font-weight:900}
+  .hstat .l{font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+
+  .marquee{background:var(--red);overflow:hidden;padding:14px 0;white-space:nowrap}
+  .marquee-track{display:inline-block;animation:scroll 22s linear infinite;font-weight:900;text-transform:uppercase;letter-spacing:.2em;font-size:.9rem;color:#fff}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  section{padding:96px 0}
+  .section-head{margin-bottom:56px}
+  .kicker{color:var(--red);font-weight:800;letter-spacing:.28em;text-transform:uppercase;font-size:.78rem}
+  .section-head h2{font-size:clamp(2rem,4.6vw,3.2rem);font-weight:900;text-transform:uppercase;margin-top:12px;letter-spacing:-.01em}
+  .section-head p{color:var(--muted);max-width:560px;margin-top:12px}
+  .center{text-align:center}
+  .center p{margin-left:auto;margin-right:auto}
+
+  .classes{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .class-card{background:var(--panel);border:1px solid var(--line);padding:34px 26px;position:relative;overflow:hidden;transition:transform .18s ease,border-color .18s ease}
+  .class-card:hover{transform:translateY(-6px);border-color:var(--red)}
+  .class-card::after{content:attr(data-num);position:absolute;top:14px;right:18px;font-size:2.6rem;font-weight:900;color:rgba(255,255,255,.06)}
+  .class-card svg{width:38px;height:38px;stroke:var(--red);margin-bottom:20px}
+  .class-card h3{font-size:1.15rem;text-transform:uppercase;font-weight:800;margin-bottom:10px}
+  .class-card p{font-size:.9rem;color:var(--muted)}
+  .class-card .meta{display:block;margin-top:16px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
+
+  .schedule{background:var(--panel)}
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th,td{padding:15px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:var(--panel2);text-transform:uppercase;font-size:.75rem;letter-spacing:.14em;color:var(--muted)}
+  td:first-child{font-weight:800;color:var(--red);white-space:nowrap}
+  td span{display:block;font-size:.75rem;color:var(--muted)}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+
+  .trainers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .trainer{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:36px 28px;text-align:center;transition:transform .18s ease,border-color .18s ease}
+  .trainer:hover{transform:translateY(-6px);border-color:var(--red)}
+  .avatar{width:92px;height:92px;border-radius:50%;margin:0 auto 20px;background:linear-gradient(135deg,var(--red),#7f1d3a);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900}
+  .trainer h3{font-size:1.1rem}
+  .trainer .role{color:var(--red);font-size:.8rem;text-transform:uppercase;letter-spacing:.14em;font-weight:700;margin:6px 0 12px}
+  .trainer p{font-size:.88rem;color:var(--muted)}
+
+  .pricing{background:var(--panel)}
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+  .plan{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:40px 32px;display:flex;flex-direction:column;transition:transform .18s ease}
+  .plan:hover{transform:translateY(-6px)}
+  .plan.featured{border:2px solid var(--red);position:relative}
+  .plan .badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:5px 16px;border-radius:999px}
+  .plan h3{text-transform:uppercase;font-size:.95rem;letter-spacing:.16em;color:var(--muted)}
+  .plan .price{font-size:2.8rem;font-weight:900;margin:14px 0 4px}
+  .plan .price small{font-size:.95rem;color:var(--muted);font-weight:600}
+  .plan ul{list-style:none;margin:24px 0 30px;flex:1}
+  .plan li{padding:8px 0;font-size:.92rem;color:var(--muted);border-bottom:1px solid var(--line)}
+  .plan li::before{content:"— ";color:var(--red);font-weight:800}
+  .plan li b{color:var(--text)}
+
+  .join{position:relative;text-align:center;background:linear-gradient(rgba(225,29,72,.12),rgba(225,29,72,.12)),var(--panel2)}
+  .join h2{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;text-transform:uppercase;margin-bottom:16px}
+  .join p{color:var(--muted);max-width:520px;margin:0 auto 32px}
+
+  footer{background:#08080b;border-top:1px solid var(--line);padding:60px 0 30px}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:40px}
+  footer h4{font-size:.85rem;text-transform:uppercase;letter-spacing:.16em;margin-bottom:14px;color:#fff}
+  footer a{display:block;padding:4px 0;font-size:.9rem;color:var(--muted)}
+  footer a:hover{color:var(--red)}
+  .foot-note{border-top:1px solid var(--line);padding-top:24px;font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media (max-width:900px){
+    .classes{grid-template-columns:repeat(2,1fr)}
+    .trainers{grid-template-columns:1fr;max-width:420px;margin:0 auto}
+    .plans{grid-template-columns:1fr;max-width:440px;margin:0 auto}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .nav-links{position:fixed;inset:70px 0 auto 0;background:#101016;flex-direction:column;padding:26px;gap:18px;border-bottom:1px solid var(--line);display:none}
+    .nav-links.open{display:flex}
+    .menu-toggle{display:block}
+  }
+  @media (max-width:520px){
+    .classes{grid-template-columns:1fr}
+    section{padding:68px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">IRON<em>PULSE</em></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#classes">Classes</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#trainers">Trainers</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#join" class="btn btn-red btn-sm">Join now</a>
+    </nav>
+    <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="tag">Cairo · Est. 2021</div>
+    <h1>Stronger<br>every <span>rep</span></h1>
+    <p>2,000 m² of iron, platforms and sweat. Certified coaches, real programming, zero excuses. Your first session is on us.</p>
+    <div class="hero-actions">
+      <a href="#join" class="btn btn-red">Start free trial</a>
+      <a href="#classes" class="btn btn-ghost">Explore classes</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">1,400+</div><div class="l">Members</div></div>
+      <div class="hstat"><div class="n">18</div><div class="l">Coaches</div></div>
+      <div class="hstat"><div class="n">60+</div><div class="l">Classes / week</div></div>
+      <div class="hstat"><div class="n">24/7</div><div class="l">Open</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee"><div class="marquee-track">
+  NO SHORTCUTS &nbsp;·&nbsp; SHOW UP &nbsp;·&nbsp; LIFT HEAVY &nbsp;·&nbsp; STAY CONSISTENT &nbsp;·&nbsp; NO SHORTCUTS &nbsp;·&nbsp; SHOW UP &nbsp;·&nbsp; LIFT HEAVY &nbsp;·&nbsp; STAY CONSISTENT &nbsp;·&nbsp;
+</div></div>
+
+<section id="classes">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Programs</div>
+      <h2>Pick your discipline</h2>
+      <p>Every class is coached, capped at 14 athletes, and scaled to your level — first-timer to competitor.</p>
+    </div>
+    <div class="classes">
+      <div class="class-card" data-num="01">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/></svg>
+        <h3>Strength</h3>
+        <p>Barbell fundamentals: squat, bench, deadlift and press. Periodized programs tracked in our app.</p>
+        <span class="meta">60 min · All levels</span>
+      </div>
+      <div class="class-card" data-num="02">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 12.5H11L9.5 22 19 10.5h-6.5z"/></svg>
+        <h3>HIIT</h3>
+        <p>Intervals, sleds and assault bikes. Forty-five minutes of engine building that torches calories.</p>
+        <span class="meta">45 min · Intermediate</span>
+      </div>
+      <div class="class-card" data-num="03">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+        <h3>Boxing</h3>
+        <p>Footwork, pads and heavy bags with ex-national-team coaches. Wrap up and learn to move.</p>
+        <span class="meta">60 min · All levels</span>
+      </div>
+      <div class="class-card" data-num="04">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8c2 2 5 3 7 3s5-1 7-3M5 16c2-2 5-3 7-3s5 1 7 3"/></svg>
+        <h3>Mobility</h3>
+        <p>Stretching, breathwork and joint prep. Recover faster and keep lifting pain-free for decades.</p>
+        <span class="meta">40 min · All levels</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="schedule" id="schedule">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Weekly timetable</div>
+      <h2>Class schedule</h2>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Time</th><th>Sat</th><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th></tr></thead>
+        <tbody>
+          <tr><td>07:00</td><td>Strength<span>Coach Karim</span></td><td>HIIT<span>Coach Salma</span></td><td>Strength<span>Coach Karim</span></td><td>Boxing<span>Coach Hassan</span></td><td>Strength<span>Coach Karim</span></td><td>HIIT<span>Coach Salma</span></td></tr>
+          <tr><td>10:00</td><td>Mobility<span>Coach Nour</span></td><td>Open gym</td><td>Mobility<span>Coach Nour</span></td><td>Open gym</td><td>Mobility<span>Coach Nour</span></td><td>Open gym</td></tr>
+          <tr><td>17:00</td><td>Boxing<span>Coach Hassan</span></td><td>Strength<span>Coach Karim</span></td><td>HIIT<span>Coach Salma</span></td><td>Strength<span>Coach Karim</span></td><td>Boxing<span>Coach Hassan</span></td><td>Strength<span>Coach Karim</span></td></tr>
+          <tr><td>19:30</td><td>HIIT<span>Coach Salma</span></td><td>Boxing<span>Coach Hassan</span></td><td>Strength<span>Coach Karim</span></td><td>Mobility<span>Coach Nour</span></td><td>HIIT<span>Coach Salma</span></td><td>Boxing<span>Coach Hassan</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="trainers">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="kicker">The team</div>
+      <h2>Coached, not just supervised</h2>
+    </div>
+    <div class="trainers">
+      <div class="trainer">
+        <div class="avatar">KA</div>
+        <h3>Karim Adel</h3>
+        <div class="role">Head strength coach</div>
+        <p>12 years under the bar, national powerlifting medalist. Wrote strength programs for 400+ athletes.</p>
+      </div>
+      <div class="trainer">
+        <div class="avatar">SM</div>
+        <h3>Salma Mostafa</h3>
+        <div class="role">HIIT &amp; conditioning</div>
+        <p>Former track sprinter. Builds engines and fixes burpee form, one interval at a time.</p>
+      </div>
+      <div class="trainer">
+        <div class="avatar">HA</div>
+        <h3>Hassan Ali</h3>
+        <div class="role">Boxing coach</div>
+        <p>Ex-national team, 84 amateur bouts. Teaches footwork first, power second.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="kicker">Membership</div>
+      <h2>Simple plans, no lock-in</h2>
+      <p>Cancel any time. Freeze up to 30 days a year. Students get 20% off with a valid ID.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Off-peak</h3>
+        <div class="price">700 <small>EGP / mo</small></div>
+        <ul>
+          <li><b>Gym floor</b> 9 AM – 4 PM</li>
+          <li>Locker room &amp; showers</li>
+          <li>1 fitness assessment</li>
+          <li>App workout tracking</li>
+        </ul>
+        <a href="#join" class="btn btn-ghost" style="text-align:center">Choose off-peak</a>
+      </div>
+      <div class="plan featured">
+        <span class="badge">Most popular</span>
+        <h3>All access</h3>
+        <div class="price">1,000 <small>EGP / mo</small></div>
+        <ul>
+          <li><b>24/7 gym access</b></li>
+          <li><b>Unlimited classes</b></li>
+          <li>Locker room, sauna &amp; showers</li>
+          <li>Quarterly program review</li>
+          <li>2 guest passes / month</li>
+        </ul>
+        <a href="#join" class="btn btn-red" style="text-align:center">Choose all access</a>
+      </div>
+      <div class="plan">
+        <h3>Coached</h3>
+        <div class="price">2,200 <small>EGP / mo</small></div>
+        <ul>
+          <li><b>Everything in All access</b></li>
+          <li><b>8 personal sessions / mo</b></li>
+          <li>Custom nutrition plan</li>
+          <li>Monthly body-comp scan</li>
+        </ul>
+        <a href="#join" class="btn btn-ghost" style="text-align:center">Choose coached</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="wrap">
+    <h2>First session free</h2>
+    <p>Walk in, train with a coach, feel the place. If it's not for you, you lost nothing but an hour.</p>
+    <a href="#" class="btn btn-red">Claim your free session</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:12px">IRON<em>PULSE</em></div>
+        <p style="font-size:.9rem;color:var(--muted);max-width:300px">2,000 m² strength and conditioning gym. Open 24/7, 365 days a year.</p>
+      </div>
+      <div>
+        <h4>Train</h4>
+        <a href="#classes">Classes</a><a href="#schedule">Schedule</a><a href="#trainers">Trainers</a><a href="#pricing">Pricing</a>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <a href="#">22 Nile Corniche, Cairo</a><a href="#">Open 24/7</a><a href="#">+20 100 234 5678</a>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Facebook</a>
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>© 2026 IRON PULSE Gym. All rights reserved.</span>
+      <span>Built for the strong.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
